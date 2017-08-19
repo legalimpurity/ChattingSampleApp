@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_vertical_margin">10dp</dimen>
+    <dimen name="activity_horizontal_margin">10dp</dimen>
+    <dimen name="list_view_divider_height">16dp</dimen>
+    <dimen name="list_view_margin_bottom">16dp</dimen>
+    <dimen name="message_text_margin_top">5dp</dimen>
+    <dimen name="message_text_size">18sp</dimen>
+</resources>

@@ -44,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference myRef;
     private ChatAdapter chatAdapter;
 
+
+    private static final String SAVED_INSTANCE_DATA = "SAVED_INSTANCE_DATA";
+
+
     @BindView(R.id.message_box)
     EditText message_box;
 
@@ -60,10 +64,42 @@ public class MainActivity extends AppCompatActivity {
         ButterKnife.bind(this);
         setFabAction(this);
         setAdapter(this);
-        displayChatMessages();
+        setFirebase();
+        // checkForSavedInstanceState first, it will call displayChatMessages if required
+        //  displayChatMessages();
+        checkForSavedInstanceState(savedInstanceState);
     }
 
+    @Override
+    protected void onSaveInstanceState(Bundle outState)
+    {
+        super.onSaveInstanceState(outState);
+        // Converting Linked Hashmap to hashmap to ArrayList
+        outState.putParcelableArrayList(SAVED_INSTANCE_DATA,new ArrayList<ChatMessage>(((HashMap<String,ChatMessage>) chatAdapter.getChatMessages()).values()));
+    }
 
+    private void checkForSavedInstanceState(Bundle savedInstanceState)
+    {
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(SAVED_INSTANCE_DATA)) {
+                restoreDatafromSavedInstance(savedInstanceState);
+            }
+        }
+        else
+            displayChatMessages();
+    }
+
+    private void restoreDatafromSavedInstance(Bundle savedInstanceState)
+    {
+        ArrayList<ChatMessage> messages_list = savedInstanceState.getParcelableArrayList(SAVED_INSTANCE_DATA);
+        HashMap<String,ChatMessage> messages_map = new HashMap<String,ChatMessage>();
+        for (int i = 0; i < messages_list.size() ; i++)
+        {
+            ChatMessage cm = messages_list.get(i);
+            messages_map.put(cm.getGuid(),cm);
+        }
+        chatAdapter.setChatMessages(messages_map);
+    }
 
     private void setFabAction(final AppCompatActivity act)
     {
@@ -98,10 +134,13 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
-    private void displayChatMessages() {
+    private void setFirebase()
+    {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         myRef = database.getReference("messages");
+    }
 
+    private void displayChatMessages() {
 
         Query myTopPostsQuery = myRef.child("messages").orderByChild("messageTime");
         myTopPostsQuery.addChildEventListener(new ChildEventListener() {

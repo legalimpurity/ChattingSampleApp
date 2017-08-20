@@ -30,6 +30,17 @@ public class ChatAdapter extends RecyclerView.Adapter<ChatAdapter.ChatItemHolder
         this.act = act;
     }
 
+    public LinkedHashMap<String, ChatMessage> getChatMessages() {
+        return chatMessages;
+    }
+
+    // Rotating device might cause loose in order
+    public void setChatMessages(HashMap<String, ChatMessage> chatMessages) {
+        this.chatMessages = new LinkedHashMap<>(chatMessages);
+        indexes = new ArrayList<String>(chatMessages.keySet());
+        notifyDataSetChanged();
+    }
+
     public void addChatMessage(ChatMessage chatObj)
     {
         this.chatMessages.put(chatObj.getGuid(),chatObj);

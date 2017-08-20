@@ -6,6 +6,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @IgnoreExtraProperties
 public class ChatMessage {
@@ -13,6 +14,7 @@ public class ChatMessage {
     private String messageText;
     private String messageUser;
     private long messageTime;
+    private String guid;
 
     public ChatMessage(String messageText, String messageUser) {
         this.messageText = messageText;
@@ -20,6 +22,7 @@ public class ChatMessage {
 
         // Initialize to current time
         messageTime = new Date().getTime();
+        this.guid = UUID.randomUUID().toString().replace("-", "");
     }
 
     // Required for FireBase
@@ -50,12 +53,21 @@ public class ChatMessage {
         this.messageTime = messageTime;
     }
 
+    public String getGuid() {
+        return guid;
+    }
+
+    public void setGuid(String guid) {
+        this.guid = guid;
+    }
+
     @Exclude
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
         result.put("messageText", messageText);
         result.put("messageUser", messageUser);
         result.put("messageTime", messageTime);
+        result.put("guid", guid);
         return result;
     }
 

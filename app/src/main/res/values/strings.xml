@@ -7,5 +7,10 @@
     <string name="sign_out">Sign Out</string>
     <string name="sign_in_error">We couldn\'t sign you in. Please try again later.</string>
 
-    <string name="welcome_prefix">Welcome </string>
+    <string name="welcome_prefix">Welcome</string>
+    <string name="title_activity_login">Sign in</string>
+
+    <string name="prompt_username">UserName</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="error_field_required">This field is required</string>
 </resources>

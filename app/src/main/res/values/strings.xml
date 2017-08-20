@@ -1,4 +1,11 @@
 <resources>
     <string name="app_name">ChattingSampleApplication</string>
     <string name="type_message">Type message ...</string>
+
+    <string name="sign_in_msg">Successfully signed in. Welcome!</string>
+    <string name="sign_out_msg">You have been signed out.</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="sign_in_error">We couldn\'t sign you in. Please try again later.</string>
+
+    <string name="welcome_prefix">Welcome </string>
 </resources>
